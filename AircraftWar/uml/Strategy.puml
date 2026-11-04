@@ -1,0 +1,56 @@
+@startuml
+!pragma layout smetana
+title 弹道策略模式（Strategy Pattern）
+
+interface ShootStrategy {
+    + shoot(aircraft: AbstractAircraft): List<BaseBullet>
+}
+
+abstract class AbstractAircraft {
+    - shootStrategy: ShootStrategy
+    + setShootStrategy(strategy: ShootStrategy): void
+    + shoot(): List<BaseBullet>
+}
+
+AbstractAircraft --> ShootStrategy : 持有并委托
+
+class NoShootStrategy
+class EnemySingleShootStrategy
+class EnemyDoubleShootStrategy
+class EnemyScatterShootStrategy
+class EnemyRingShootStrategy
+class BossPhaseTwoShootStrategy
+
+ShootStrategy <|.. NoShootStrategy
+ShootStrategy <|.. EnemySingleShootStrategy
+ShootStrategy <|.. EnemyDoubleShootStrategy
+ShootStrategy <|.. EnemyScatterShootStrategy
+ShootStrategy <|.. EnemyRingShootStrategy
+ShootStrategy <|.. BossPhaseTwoShootStrategy
+BossPhaseTwoShootStrategy --> EnemyScatterShootStrategy : 交替使用
+BossPhaseTwoShootStrategy --> EnemyRingShootStrategy : 交替使用
+
+class HeroStraightShootStrategy
+class HeroScatterShootStrategy
+class HeroRingShootStrategy
+
+ShootStrategy <|.. HeroStraightShootStrategy
+ShootStrategy <|.. HeroScatterShootStrategy
+ShootStrategy <|.. HeroRingShootStrategy
+
+class HeroAircraft {
+    + enableScatterShoot(): void
+    + enableRingShoot(): void
+}
+class FireProp
+class SuperFireProp
+
+AbstractAircraft <|-- HeroAircraft
+FireProp ..> HeroAircraft : 切换为散射
+SuperFireProp ..> HeroAircraft : 瞬发一圈环射
+
+HeroAircraft ..> HeroStraightShootStrategy : 初始使用
+HeroAircraft ..> HeroScatterShootStrategy : 创建并切换
+HeroAircraft ..> HeroRingShootStrategy : 一次性弹幕，保留原策略
+
+@enduml

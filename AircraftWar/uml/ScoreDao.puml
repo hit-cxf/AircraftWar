@@ -1,0 +1,50 @@
+@startuml
+!pragma layout smetana
+title 飞机大战排行榜 DAO 模式（Data Access Object Pattern）
+
+class Main <<窗口协调>>
+class RankingFrame <<排行榜界面>>
+class RankingService <<业务服务>> {
+  - dao: ScoreDao
+  + ranking(): List<ScoreRecord>
+  + save(name: String, score: int, endedAt: LocalDateTime): void
+  + delete(record: ScoreRecord): boolean
+}
+
+interface ScoreDao <<DAO 接口>> {
+    + findAll(): List<ScoreRecord>
+    + save(record: ScoreRecord): void
+    + delete(record: ScoreRecord): boolean
+}
+
+class FileScoreDao <<DAO 实现>> {
+    - filePath: Path
+    + FileScoreDao(filePath: Path)
+    + findAll(): List<ScoreRecord>
+    + save(record: ScoreRecord): void
+    + delete(record: ScoreRecord): boolean
+}
+
+class ScoreRecord <<数据对象>> {
+    - playerName: String
+    - score: int
+    - recordedAt: LocalDateTime
+    + getPlayerName(): String
+    + getScore(): int
+    + getRecordedAt(): LocalDateTime
+}
+
+Main ..> FileScoreDao : 根据难度配置文件
+Main ..> RankingFrame : 游戏结束时显示
+RankingFrame --> RankingService
+RankingService --> ScoreDao : 保存、排序和删除成绩
+ScoreDao <|.. FileScoreDao
+ScoreDao ..> ScoreRecord : 操作
+FileScoreDao ..> ScoreRecord : 文件读写
+
+note right of FileScoreDao
+  每个难度传入不同文件路径
+  如 scores/normal.tsv
+end note
+
+@enduml

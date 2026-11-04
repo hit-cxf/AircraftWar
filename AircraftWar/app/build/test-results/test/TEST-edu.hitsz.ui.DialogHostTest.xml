@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="edu.hitsz.ui.DialogHostTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2026-11-04T12:37:36.247Z" hostname="XinfandeMacBook-Air.local" time="0.525">
+  <properties/>
+  <testcase name="promptCancelAndExplicitDismissCompleteOnceWithoutSubmitting()" classname="edu.hitsz.ui.DialogHostTest" time="0.509"/>
+  <testcase name="enterSubmitsEscapeCancelsAndFocusTraversalStaysWithinDialog()" classname="edu.hitsz.ui.DialogHostTest" time="0.003"/>
+  <testcase name="maskResizesWithContentAndRestoresDefaultButtonOnClose()" classname="edu.hitsz.ui.DialogHostTest" time="0.004"/>
+  <testcase name="confirmDismissAndAcceptEachCallAnswerOnceAfterClosingMask()" classname="edu.hitsz.ui.DialogHostTest" time="0.004"/>
+  <testcase name="promptRetainsInvalidInputThenSubmitsSuccessOnlyOnce()" classname="edu.hitsz.ui.DialogHostTest" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

@@ -1,0 +1,6 @@
+Font: ZCOOL QingKe HuangYou (站酷庆科黄油体)
+Copyright 2018 The ZCOOL QingKe HuangYou Project Authors.
+Official source: https://github.com/google/fonts/tree/main/ofl/zcoolqingkehuangyou
+Font download: https://raw.githubusercontent.com/google/fonts/main/ofl/zcoolqingkehuangyou/ZCOOLQingKeHuangYou-Regular.ttf
+License: SIL Open Font License 1.1; full notice and terms are included in OFL.txt.
+The bundled TTF is unmodified. Only the home-screen title uses this font.

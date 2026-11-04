@@ -1,0 +1,62 @@
+@startuml
+!pragma layout smetana
+title 实验五：Swing 界面与 JavaFX 游戏协作
+class Main {
+  - cards: CardLayout
+  - gamePanel: JFXPanel
+  - game: Game
+  - dialogs: DialogHost
+  - startGame(difficulty: Difficulty): void
+  - showMenu(): void
+  - shutdown(): void
+}
+class DifficultySelectionPanel
+class HomePanel
+class GlobalSettingsPanel
+class SettingsPanel
+class CustomResultPanel
+abstract class Game {
+  - onGameOver: IntConsumer
+  + action(): void
+  + stop(): void
+  + pause(): void
+  + resume(): void
+}
+class RankingPanel
+class DialogHost {
+  + message(title, text): void
+  + confirm(title, text, answer): void
+  + prompt(title, text, initial, submit): void
+  + dismiss(): void
+}
+class RankingService
+interface ScoreDao
+class AudioManager
+class AudioClip
+class MediaPlayer
+class AudioSettings
+class HeroAircraft
+class FireEffectTimer
+Main --> DifficultySelectionPanel : 菜单卡片
+Main --> HomePanel : 动态首页
+Main --> GlobalSettingsPanel : 全局声音设置
+Main --> SettingsPanel : 自定义数值设置
+Main --> CustomResultPanel : 自定义结果卡片，不记排行
+Main --> Game : JFXPanel 游戏卡片
+Main --> RankingPanel : 标准结果卡片
+Main --> DialogHost : 包裹主窗口内容
+RankingPanel --> RankingService
+RankingPanel ..> DialogHost : 内部姓名/删除确认
+SettingsPanel ..> DialogHost : 内部错误提示
+RankingService --> ScoreDao
+Game --> AudioManager
+AudioManager --> AudioClip : 缓存复用短音效
+AudioManager --> MediaPlayer : 循环音乐、暂停、释放
+AudioManager --> AudioSettings : 音量与静音
+Game --> HeroAircraft
+HeroAircraft --> FireEffectTimer
+note right of FireEffectTimer
+  Runnable 在线程中计时
+  Platform.runLater 恢复弹道
+end note
+@enduml

@@ -1,0 +1,65 @@
+@startuml
+!pragma layout smetana
+title 炸弹与冰冻道具：观察者模式（Observer Pattern）
+
+abstract class AbstractProp
+abstract class AbstractEffectProp <<抽象主题>> {
+    # observers: List<PropEffectObserver>
+    + addObserver(observer: PropEffectObserver): void
+    + removeObserver(observer: PropEffectObserver): void
+    + activate(heroAircraft: HeroAircraft): void
+    {abstract} # notifyObservers(): void
+}
+
+class BombProp <<具体主题>> {
+    # notifyObservers(): void
+}
+class FreezeProp <<具体主题>> {
+    # notifyObservers(): void
+}
+
+interface PropEffectObserver <<观察者>> {
+    + onBomb(): void
+    + onFreeze(): void
+}
+
+class MobEnemy <<具体观察者>>
+class EliteEnemy <<具体观察者>>
+class ElitePlusEnemy <<具体观察者>>
+class EliteProEnemy <<具体观察者>>
+class BossEnemy <<具体观察者>>
+class EnemyBullet <<具体观察者>>
+
+AbstractProp <|-- AbstractEffectProp
+AbstractEffectProp <|-- BombProp
+AbstractEffectProp <|-- FreezeProp
+AbstractEffectProp "1" --> "0..*" PropEffectObserver : 保存注册列表
+BombProp ..> PropEffectObserver : 通知 onBomb()
+FreezeProp ..> PropEffectObserver : 通知 onFreeze()
+
+PropEffectObserver <|.. MobEnemy
+PropEffectObserver <|.. EliteEnemy
+PropEffectObserver <|.. ElitePlusEnemy
+PropEffectObserver <|.. EliteProEnemy
+PropEffectObserver <|.. BossEnemy
+PropEffectObserver <|.. EnemyBullet
+
+abstract class Game <<调用方>>
+class PropEffectAction <<注册协调>> {
+    {static} + activate(prop: AbstractEffectProp, hero: HeroAircraft, enemies: List, bullets: List): int
+}
+
+Game ..> PropEffectAction : 拾取时调用，按返回数量计分
+PropEffectAction ..> AbstractEffectProp : 注册、触发、移除
+PropEffectAction ..> PropEffectObserver : 只注册存活对象
+
+note left of AbstractEffectProp
+  主题不依赖具体敌机类型。
+  拾取时注册，通知后移除。
+end note
+
+note bottom of PropEffectAction
+  返回本次新击毁的敌机数量。
+  炸弹击毁计分，不触发道具掉落。
+end note
+@enduml

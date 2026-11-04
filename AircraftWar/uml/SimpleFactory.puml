@@ -1,0 +1,44 @@
+@startuml
+!pragma layout smetana
+title 道具简单工厂（Prop's Simple Factory）
+
+abstract class AbstractProp
+
+enum PropType {
+    BLOOD 
+    FIRE 
+    SUPER_FIRE
+    BOMB
+    FREEZE 
+}
+
+class PropFactory {
+    - PropFactory()
+    + {static} create(type: PropType, x: int, y: int): AbstractProp
+}
+
+class Game
+
+class BloodProp
+class FireProp
+class SuperFireProp
+class BombProp
+class FreezeProp
+
+Game ..> PropFactory
+PropFactory ..> PropType
+PropFactory ..> AbstractProp
+
+AbstractProp <|-- BloodProp
+AbstractProp <|-- FireProp
+AbstractProp <|-- SuperFireProp
+AbstractProp <|-- BombProp
+AbstractProp <|-- FreezeProp
+
+PropFactory ..> BloodProp : 创建
+PropFactory ..> FireProp : 创建
+PropFactory ..> SuperFireProp : 创建
+PropFactory ..> BombProp : 创建
+PropFactory ..> FreezeProp : 创建
+
+@enduml

@@ -1,0 +1,121 @@
+@startuml
+!pragma layout smetana
+title 飞机大战核心实体继承类图
+
+abstract class AbstractFlyingObject {
+    # locationX: int
+    # locationY: int
+    # speedX: int
+    # speedY: int
+    # image: Image
+    # width: int
+    # height: int
+    # isValid: boolean
+    + forward(): void
+    + crash(other: AbstractFlyingObject): boolean
+    + setLocation(x: double, y: double): void
+    + getLocationX(): int
+    + getLocationY(): int
+    + getSpeedY(): int
+    + getImage(): Image
+    + getWidth(): int
+    + getHeight(): int
+    + notValid(): boolean
+    + vanish(): void
+}
+
+abstract class AbstractAircraft {
+    # maxHp: int
+    # hp: int
+    - shootStrategy: ShootStrategy
+    + decreaseHp(amount: int): void
+    + getHp(): int
+    + setShootStrategy(strategy: ShootStrategy): void
+    + shoot(): List<BaseBullet>
+}
+
+class HeroAircraft {
+    - power: int
+    - {static} heroAircraft: HeroAircraft
+    - HeroAircraft(x: int, y: int, speedX: int, speedY: int, hp: int)
+    + {static} getInstance(): HeroAircraft
+    + forward(): void
+    + increaseHp(amount: int): void
+    + enableScatterShoot(): void
+    + enableRingShoot(): void
+}
+class MobEnemy {
+    + forward(): void
+}
+class EliteEnemy {
+    + forward(): void
+}
+class ElitePlusEnemy {
+    + forward(): void
+}
+class EliteProEnemy {
+    + forward(): void
+}
+class BossEnemy {
+    + forward(): void
+}
+
+abstract class BaseBullet {
+    - power: int
+    + forward(): void
+    + getPower(): int
+}
+class HeroBullet
+class EnemyBullet
+
+abstract class AbstractProp {
+    + forward(): void
+    + activate(heroAircraft: HeroAircraft): void
+}
+class BloodProp {
+    + activate(heroAircraft: HeroAircraft): void
+}
+class FireProp {
+    + activate(heroAircraft: HeroAircraft): void
+}
+class SuperFireProp {
+    + activate(heroAircraft: HeroAircraft): void
+}
+class BombProp {
+    # notifyObservers(): void
+}
+class FreezeProp {
+    # notifyObservers(): void
+}
+
+interface ShootStrategy
+AbstractAircraft --> ShootStrategy : 持有并委托射击
+
+AbstractFlyingObject <|-- AbstractAircraft
+AbstractAircraft <|-- HeroAircraft
+AbstractAircraft <|-- MobEnemy
+AbstractAircraft <|-- EliteEnemy
+AbstractAircraft <|-- ElitePlusEnemy
+AbstractAircraft <|-- EliteProEnemy
+AbstractAircraft <|-- BossEnemy
+
+AbstractFlyingObject <|-- BaseBullet
+BaseBullet <|-- HeroBullet
+BaseBullet <|-- EnemyBullet
+
+AbstractFlyingObject <|-- AbstractProp
+AbstractProp <|-- BloodProp
+AbstractProp <|-- FireProp
+AbstractProp <|-- SuperFireProp
+abstract class AbstractEffectProp
+AbstractProp <|-- AbstractEffectProp
+AbstractEffectProp <|-- BombProp
+AbstractEffectProp <|-- FreezeProp
+interface PropEffectObserver
+PropEffectObserver <|.. MobEnemy
+PropEffectObserver <|.. EliteEnemy
+PropEffectObserver <|.. ElitePlusEnemy
+PropEffectObserver <|.. EliteProEnemy
+PropEffectObserver <|.. BossEnemy
+PropEffectObserver <|.. EnemyBullet
+@enduml

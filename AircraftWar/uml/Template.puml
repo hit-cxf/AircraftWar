@@ -1,0 +1,67 @@
+@startuml
+!pragma layout smetana
+title 三种游戏难度：模板方法模式（Template Method Pattern）
+abstract class Game <<抽象模板>> {
+  - parameters: GameParameters
+  - difficultyLevel: int
+  - activeBoss: BossEnemy
+  - bossSpawnCount: int
+  + {leaf} action(): void
+  {abstract} # parametersAtLevel(level: int): GameParameters
+  {abstract} # bossHpForSpawn(spawnNumber: int): int
+  - startGameLoop(): void
+  - tick(): void
+  - updateDifficulty(): void
+  - spawnEnemy(): void
+  - spawnBoss(): void
+  - shootAction(): void
+  + stop(): void
+}
+class EasyGame <<具体模板>> {
+  # parametersAtLevel(level: int): GameParameters
+  # bossHpForSpawn(spawnNumber: int): int
+}
+class NormalGame <<具体模板>> {
+  # parametersAtLevel(level: int): GameParameters
+  # bossHpForSpawn(spawnNumber: int): int
+}
+class HardGame <<具体模板>> {
+  # parametersAtLevel(level: int): GameParameters
+  # bossHpForSpawn(spawnNumber: int): int
+}
+class GameParameters <<不可变参数>> {
+  + enemyMax: int
+  + eliteChance: double
+  + plusChance: double
+  + proChance: double
+  + heroShootCycle: int
+  + enemyShootCycle: int
+  + spawnCycle: int
+  + enemySpeed: int
+  + hpMultiplier: double
+  + bossThreshold: int
+}
+class Main
+Game <|-- EasyGame
+Game <|-- NormalGame
+Game <|-- HardGame
+Game --> GameParameters
+Main ..> Game : 根据难度创建子类，调用 action()
+note left of Game
+  action() 为 final 模板方法：
+  初始参数 -> 公共游戏循环 -> 背景音乐
+  循环固定执行生成、移动、碰撞、清理。
+  每 20 秒调用子类规则更新参数。
+end note
+note bottom of EasyGame
+  参数固定，Boss 阈值为 0。
+end note
+note bottom of NormalGame
+  加快敌机生成，提高速度与血量。
+  每次 Boss 均为 300 血。
+end note
+note bottom of HardGame
+  同时调整双方射击周期。
+  Boss 血量为 450 + 150 × (次数 - 1)。
+end note
+@enduml
