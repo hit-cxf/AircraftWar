@@ -1,5 +1,7 @@
 # 飞机大战：软件构造课程结项工程
 
+![飞机大战展示：四种飞行模式、Boss 弹幕战斗与自定义参数](docs/images/aircraftwar-showcase.png)
+
 本目录是可独立构建的完整 Gradle 工程。源码、资源、测试、设计模式类图与 Wrapper 均已包含。
 
 ## 技术栈

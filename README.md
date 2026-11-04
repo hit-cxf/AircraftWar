@@ -1,5 +1,7 @@
 # AircraftWar 飞机大战
 
+![飞机大战展示：四种飞行模式、Boss 弹幕战斗与自定义参数](docs/images/aircraftwar-showcase.png)
+
 软件构造课程实验项目，以飞机大战为案例学习 Java、面向对象建模、设计模式、文件读写、单元测试、图形界面和多线程。
 
 当前主要开发版本位于 [`AircraftWar`](AircraftWar)。`JavaSwing/AircraftWar-base` 为保留的 Swing 基础版本。本文记录截至 **2026-11-04** 的开发状态。
