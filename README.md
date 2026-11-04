@@ -1,6 +1,6 @@
 # AircraftWar 飞机大战
 
-![飞机大战展示：四种飞行模式、Boss 弹幕战斗与自定义参数](docs/images/aircraftwar-showcase.png)
+![飞机大战展示：四种飞行模式、Boss 弹幕战斗与自定义参数](asset/poster.png)
 
 软件构造课程实验项目，以飞机大战为案例学习 Java、面向对象建模、设计模式、文件读写、单元测试、图形界面和多线程。
 
